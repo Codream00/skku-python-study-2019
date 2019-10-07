@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import random
 import pymysql
+import sys
 
 HANGMANPICS = ['''
 
@@ -61,9 +62,14 @@ HANGMANPICS = ['''
       |
 =========''']
 
-conn = pymysql.connect(host="localhost", user="root", password="1234", db="mydb", charset='utf8')
-curs = conn.cursor()
-curs.execute("select * from word")
+try:
+    conn = pymysql.connect(host="localhost", user="root", password="1234", db="mydb", charset='utf8')
+    curs = conn.cursor()
+    curs.execute("select * from word")
+except:
+    print("sql load error")
+    sys.exit()
+
 words = [ word[1] for word in curs.fetchall() ]
 
 def getRandomWord(wordList):

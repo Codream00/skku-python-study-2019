@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.4
 # -*- coding: utf-8 -*-
 import random
+import sys
 
 HANGMANPICS = ['''
 
@@ -59,7 +60,12 @@ HANGMANPICS = ['''
  / \  |
       |
 =========''']
-words = open("words.txt", 'r').readline().split()
+
+try:
+    words = open("words.txt", 'r').readline().split()
+except:
+    print("file read error")
+    sys.exit()
 
 def getRandomWord(wordList):
     # This function returns a random string from the passed list of strings.
@@ -128,8 +134,13 @@ def checkWrongAnswer(missedLetters, secretWord):
 
 # Load Highest Score
 def loadScore():
-    f = open("highestScore.txt",'r')
+    try:
+        f = open("highestScore.txt",'r')
+    except:
+        print("loadscore error")
+        return None
     highestScore = f.readline()
+    f.close()
     if(highestScore):
         return int(highestScore)
     return None
